@@ -1,0 +1,14 @@
+[project]
+name = "chinese-collocation-complexity-fork"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "huggingface-hub==0.36.2",
+    "ltp>=4.2.0",
+    "numpy>=1.18.0",
+    "openpyxl>=3.0.0",
+    "pandas>=1.0.0",
+    "requests>=2.34.2",
+]

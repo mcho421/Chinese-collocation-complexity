@@ -1,4 +1,4 @@
-# 中文搭配资源库
+# 中文搭配资源库 (Chinese Collocation Resources)
 
 本项目开源了如下论文所涉及的数据和源码：   
 This project releases the data and codes from the following articles:
@@ -95,15 +95,41 @@ This project releases the data and codes from the following articles:
 
 [下载说明](https://github.com/iris2hu/Chinese-collocation-complexity/blob/main/collocation_data/collocation_data.md)
 
-## 4. 句法复杂度分析Python源码
+## 4. 句法复杂度分析 Python 源码 (Python Source Code & Installation)
 
-**环境 (Environments)**
+### 4.1 环境要求 (Prerequisites)
 
-*   **`Python 3.7+`**
-*   **[`pyltp`](https://github.com/HIT-SCIR/pyltp)**
+* **Python**: Python 3.8+ (推荐使用 `uv` 进行环境与依赖管理)
+* **依赖库 (Dependencies)**: `ltp` (LTP 4+), `pandas`, `numpy`, `openpyxl`
 
-**运行 (Run the codes)**
+### 4.2 安装步骤 (Installation Steps)
 
-```python
-python main.py -i ./samples/ -o result.csv -mp path_to_LTP_models
+1. **克隆仓库 (Clone Repository)**:
+   ```bash
+   git clone https://github.com/iris2hu/Chinese-collocation-complexity.git
+   cd Chinese-collocation-complexity
+   ```
+
+2. **使用 uv 安装依赖 (Install Dependencies with uv)**:
+   ```bash
+   uv sync
+   ```
+
+### 4.3 LTP 4 模型说明 (LTP Model Note)
+
+本工具基于 **LTP 4** (`ltp`) 深度学习模型，首次运行分析脚本时会自动下载所需模型文件（默认 `LTP/small`），无须手动下载或解压旧版 `ltp_data_v3.4.0` 压缩包。
+
+### 4.4 运行分析脚本 (Run Analysis)
+
+使用 `main.py` 对指定目录下的 `.txt` 文本文件进行批量句法复杂度指标计算：
+
+```bash
+uv run python main.py -i ./samples/ -o result.csv
 ```
+
+**参数说明 (Argument Description)**:
+* `-i`, `--input`: 输入包含待分析 `.txt` 文本文件的目录路径 (如 `./samples/`)
+* `-o`, `--output`: 输出分析结果 CSV 文件的保存路径 (如 `result.csv`)
+* `-mp`, `--modelpath` *(可选/Optional)*: LTP 4 模型名称或自定义模型路径 (默认使用 `"LTP/small"`)
+
+

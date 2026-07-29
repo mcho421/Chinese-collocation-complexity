@@ -1,43 +1,33 @@
 import os
-from pyltp import SentenceSplitter, Segmentor, Postagger, Parser
+from ltp import LTP, StnSplit
 
 
-def load_ltpmodel(model_path):
-    cws_model_path = os.path.join(model_path, 'cws.model')  # word segmentation model
-    pos_model_path = os.path.join(model_path, 'pos.model')  # pos tagging model
-    par_model_path = os.path.join(model_path, 'parser.model')  # parsing model
-
-    segmentor = Segmentor()
-    segmentor.load(cws_model_path)
-    postagger = Postagger()
-    postagger.load(pos_model_path)
-    parser = Parser()
-    parser.load(par_model_path)
-    return segmentor, postagger, parser
+def load_ltpmodel(model_path=None):
+    if model_path is None:
+        return LTP("LTP/small")
+    return LTP(model_path)
 
 
-def release_ltpmodel(segmentor, postagger, parser):
-    segmentor.release()
-    postagger.release()
-    parser.release()
-
-
-def parse(sent, segmentor, postagger, parser):
+def parse(sent, ltp):
     d = {}
-    wordlist = segmentor.segment(sent)
-    postags = postagger.postag(wordlist)
+    res = ltp.pipeline([sent], tasks=["cws", "pos", "dep"])
 
-    arcs = parser.parse(wordlist, postags)
-    for i, arc in enumerate(arcs):
-        token, pos = wordlist[i], postags[i]
-        parent = arc.head - 1
-        relate = arc.relation
+    wordlist = res.cws[0]
+    postags = res.pos[0]
+    heads = res.dep[0]['head']
+    labels = res.dep[0]['label']
+
+    for i in range(len(wordlist)):
+        token = wordlist[i]
+        pos = postags[i]
+        parent = heads[i] - 1
+        relate = labels[i]
         d[i] = {'cont': token, 'pos': pos, 'parent': parent, 'relate': relate}
 
     return d
 
 
-def text_process(text, segmentor, postagger, parser):
+def text_process(text, ltp):
     sent_id, text_dict = 0, {}
     paras = text.split('\n')
 
@@ -45,13 +35,13 @@ def text_process(text, segmentor, postagger, parser):
         para = para.strip()
         if len(para) < 3:
             continue
-        sents = SentenceSplitter.split(para)
+        sents = StnSplit().split(para)
         for sent in sents:
             if len(sent) < 3:
                 continue
 
             sent_id += 1
-            worddict = parse(sent, segmentor, postagger, parser)
+            worddict = parse(sent, ltp)
             text_dict[sent_id] = {'worddict': worddict, 'sent': sent}
 
     return text_dict
