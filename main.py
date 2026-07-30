@@ -30,13 +30,14 @@ args = parser.parse_args()
 ltp = LTP(args.model_path)
 index_data = {}
 
-for file in args.input_dir.glob('*.txt'):
+for file_path in args.input_dir.glob('*.txt'):
+    filename = file_path.stem
+    text = file_path.read_text(encoding='utf-8')
 
-    filename = os.path.split(file)[-1].replace('.txt', '')
-    text = open(file, 'r').read()
     if len(text) < 20:
         print(filename, 'too short and pass...')
         continue
+
     text_dict = text_process(text, ltp)
     indices = getSyntacticIndices(text_dict)
     index_data[filename] = indices
