@@ -124,11 +124,10 @@ This project releases the data and codes from the following articles:
 使用 `main.py` 对指定目录下的 `.txt` 文本文件进行批量句法复杂度指标计算：
 
 ```bash
-uv run python main.py -i ./samples/ -o result.csv
+uv run python main.py ./samples/*.txt -o result.csv
 ```
 
 **参数说明 (Argument Description)**:
-* `-i`, `--input`: 输入包含待分析 `.txt` 文本文件的目录路径 (如 `./samples/`)
 * `-o`, `--output`: 输出分析结果 CSV 文件的保存路径 (如 `result.csv`)
 * `-mp`, `--modelpath` *(可选/Optional)*: LTP 4 模型名称或自定义模型路径 (默认使用 `"LTP/small"`)
 

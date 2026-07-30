@@ -21,16 +21,15 @@ python main.py -i ./samples/ -o result.csv [-mp path_or_name_of_LTP_model]
 parser = argparse.ArgumentParser()
 parser.add_argument("-mp", "--modelpath", dest="model_path", type=str, required=False, default="LTP/small",
                     help="The path or pretrained model name of the LTP model (optional, defaults to LTP/small)")
-parser.add_argument("-i", "--input", dest="input_dir", type=Path, metavar='DIR', required=True,
-                    help="The path to the input directory")
-parser.add_argument("-o", "--output", dest="output_path", type=Path, metavar='FILE', required=True,
+parser.add_argument("input_paths", nargs='+', type=Path, metavar='INPUT_FILES', help="The paths to the input files")
+parser.add_argument("-o", "--output", dest="output_path", type=Path, metavar='OUTPUT_FILE', required=True,
                     help="The path to the output file")
 args = parser.parse_args()
 
 ltp = LTP(args.model_path)
 index_data = {}
 
-for file_path in args.input_dir.glob('*.txt'):
+for file_path in args.input_paths:
     filename = file_path.stem
     text = file_path.read_text(encoding='utf-8')
 
