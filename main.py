@@ -26,14 +26,13 @@ parser.add_argument("-o", "--output", dest="output_path", type=str, metavar='<st
                     help="The path to the output file")
 args = parser.parse_args()
 
-model_path = args.model_path
 input_path = args.input_path
 output_file = args.output_path
 
 if not input_path.endswith('/') and not input_path.endswith('\\'):
     input_path += '/'
 
-ltp = load_ltpmodel(model_path)
+ltp = LTP(args.model_path or "LTP/small")
 input_files = glob.glob(input_path + '*.txt')
 index_data = {}
 
