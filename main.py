@@ -18,7 +18,7 @@ python main.py -i ./samples/ -o result.csv [-mp path_or_name_of_LTP_model]
 
 # set the args
 parser = argparse.ArgumentParser()
-parser.add_argument("-mp", "--modelpath", dest="model_path", type=str, metavar='<str>', required=False, default=None,
+parser.add_argument("-mp", "--modelpath", dest="model_path", type=str, metavar='<str>', required=False, default="LTP/small",
                     help="The path or pretrained model name of the LTP model (optional, defaults to LTP/small)")
 parser.add_argument("-i", "--input", dest="input_path", type=str, metavar='<str>', required=True,
                     help="The path to the input directory")
@@ -32,7 +32,7 @@ output_file = args.output_path
 if not input_path.endswith('/') and not input_path.endswith('\\'):
     input_path += '/'
 
-ltp = LTP(args.model_path or "LTP/small")
+ltp = LTP(args.model_path)
 input_files = glob.glob(input_path + '*.txt')
 index_data = {}
 
