@@ -1,5 +1,6 @@
-import glob
 import argparse
+from pathlib import Path
+
 import pandas as pd
 from utils_text import *
 from syntactic import getSyntacticIndices
@@ -18,25 +19,18 @@ python main.py -i ./samples/ -o result.csv [-mp path_or_name_of_LTP_model]
 
 # set the args
 parser = argparse.ArgumentParser()
-parser.add_argument("-mp", "--modelpath", dest="model_path", type=str, metavar='<str>', required=False, default="LTP/small",
+parser.add_argument("-mp", "--modelpath", dest="model_path", type=str, required=False, default="LTP/small",
                     help="The path or pretrained model name of the LTP model (optional, defaults to LTP/small)")
-parser.add_argument("-i", "--input", dest="input_path", type=str, metavar='<str>', required=True,
+parser.add_argument("-i", "--input", dest="input_dir", type=Path, metavar='DIR', required=True,
                     help="The path to the input directory")
-parser.add_argument("-o", "--output", dest="output_path", type=str, metavar='<str>', required=True,
+parser.add_argument("-o", "--output", dest="output_path", type=Path, metavar='FILE', required=True,
                     help="The path to the output file")
 args = parser.parse_args()
 
-input_path = args.input_path
-output_file = args.output_path
-
-if not input_path.endswith('/') and not input_path.endswith('\\'):
-    input_path += '/'
-
 ltp = LTP(args.model_path)
-input_files = glob.glob(input_path + '*.txt')
 index_data = {}
 
-for file in input_files:
+for file in args.input_dir.glob('*.txt'):
 
     filename = os.path.split(file)[-1].replace('.txt', '')
     text = open(file, 'r').read()
@@ -48,5 +42,5 @@ for file in input_files:
     index_data[filename] = indices
 
 df = pd.DataFrame.from_dict(index_data, orient='index')
-df.to_csv(output_file)
-print(f"Done! Results successfully saved to {output_file}")
+df.to_csv(args.output_path)
+print(f"Done! Results successfully saved to {args.output_path}")
