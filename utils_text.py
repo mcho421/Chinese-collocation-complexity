@@ -29,13 +29,13 @@ def text_process(text, ltp):
         paragraph = paragraph.strip()
         if len(paragraph) < 3:
             continue
-        sents = StnSplit().split(paragraph)
-        for sent in sents:
-            if len(sent) < 3:
+        sentences = StnSplit().split(paragraph)
+        for sentence in sentences:
+            if len(sentence) < 3:
                 continue
 
             sentence_id += 1
-            worddict = parse(sent, ltp)
-            text_dict[sentence_id] = {'worddict': worddict, 'sent': sent}
+            worddict = parse(sentence, ltp)
+            text_dict[sentence_id] = {'worddict': worddict, 'sent': sentence}
 
     return text_dict
