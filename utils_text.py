@@ -9,14 +9,14 @@ def build_dependency_tree(sentence, ltp):
     tokens = res.cws[0]
     pos_tags = res.pos[0]
     heads = res.dep[0]['head']
-    labels = res.dep[0]['label']
+    relations = res.dep[0]['label']
 
     for i in range(len(tokens)):
         token = tokens[i]
         pos = pos_tags[i]
         parent = heads[i] - 1
-        relate = labels[i]
-        dependency_tree[i] = {'token': token, 'pos': pos, 'parent': parent, 'relate': relate}
+        relation = relations[i]
+        dependency_tree[i] = {'token': token, 'pos': pos, 'parent': parent, 'relation': relation}
 
     return dependency_tree
 

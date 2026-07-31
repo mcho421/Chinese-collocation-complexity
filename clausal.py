@@ -50,15 +50,15 @@ def clausal_index(sent_cont, word_dict):
                     # T-unit detection
                     is_Tunit = False
                     for info in tmp_info:
-                        if info['relate'] in ['HED']:
+                        if info['relation'] in ['HED']:
                             is_Tunit = True
-                        elif info['relate'] == 'COO':
+                        elif info['relation'] == 'COO':
                             parent_id = int(info['parent'])
-                            if word_dict[parent_id]['relate'] == 'HED':
+                            if word_dict[parent_id]['relation'] == 'HED':
                                 is_Tunit = True
-                            elif word_dict[parent_id]['relate'] == 'COO':
+                            elif word_dict[parent_id]['relation'] == 'COO':
                                 grandfather_id = int(word_dict[parent_id]['parent'])
-                                if word_dict[grandfather_id]['relate'] == 'HED':
+                                if word_dict[grandfather_id]['relation'] == 'HED':
                                     is_Tunit = True
                             if info['pos'] in ['v', 'a', 'p']:
                                 is_Tunit = True

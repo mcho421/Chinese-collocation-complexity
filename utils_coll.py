@@ -18,32 +18,32 @@ def getColl(words):
             continue
 
         # P_X_DN
-        if value['relate'] == 'POB' and value['pos'] == 'nd':
+        if value['relation'] == 'POB' and value['pos'] == 'nd':
             if key > parent_id + 1 and words[parent_id]['pos'] == 'p' and parent_cont in ['在', '到', '从', '自', '自从', '向',
                                                                                           '往', '除了', '于', '沿着', '至',
                                                                                           '由', '顺着', '朝', '朝着', '沿',
                                                                                           '向着']:
                 coll_p_dn = parent_cont + '\t' + 'X' + '\t' + value['token'] + '\t' + 'P_X_DN'
                 collocation.append(coll_p_dn)
-        if value['relate'] == 'POB' and value['token'] in ['时', '时候']:
+        if value['relation'] == 'POB' and value['token'] in ['时', '时候']:
             if key > parent_id + 1 and words[parent_id]['pos'] == 'p' and parent_cont in ['在', '当', '每当', '从', '自从',
                                                                                           '自', '到']:
                 coll_p_dn = parent_cont + '\t' + 'X' + '\t' + value['token'] + '\t' + 'P_X_DN'
                 collocation.append(coll_p_dn)
 
         # P_X_U
-        if value['relate'] == 'RAD' and value['pos'] == 'u' and value['token'] not in notHV:
+        if value['relation'] == 'RAD' and value['pos'] == 'u' and value['token'] not in notHV:
             if key > parent_id + 1 and words[parent_id]['pos'] == 'p':
                 coll_p_u = parent_cont + '\t' + 'X' + '\t' + value['token'] + '\t' + 'P_X_U'
                 collocation.append(coll_p_u)
 
         # CN
-        if value['relate'] == 'ATT' and value['pos'] == 'q':
+        if value['relation'] == 'ATT' and value['pos'] == 'q':
             if words[parent_id]['pos'] in ['n', 'ni', 'ns', 'nt', 'nz']:
                 coll_q_n = value['token'] + '\t' + parent_cont + '\t' + 'Q_N'
                 collocation.append(coll_q_n)
         # AN
-        if value['relate'] == 'ATT' and value['pos'] == 'a':
+        if value['relation'] == 'ATT' and value['pos'] == 'a':
             if words[parent_id]['pos'] in ['n', 'ni', 'ns', 'nt', 'nz']:
                 if key == parent_id - 1:
                     coll_a_n = value['token'] + '\t' + parent_cont + '\t' + 'A_N'
@@ -62,10 +62,10 @@ def getColl(words):
                     collocation.append(coll_a_x_n)
 
         # VO
-        if value['relate'] in ['VOB', 'FOB', 'IOB'] and value['pos'] in ['n', 'ni', 'ns', 'nt', 'nz']:
-            if words.__contains__(parent_id + 1) and words[parent_id + 1]['relate'] in ['RAD', 'CMP'] and \
+        if value['relation'] in ['VOB', 'FOB', 'IOB'] and value['pos'] in ['n', 'ni', 'ns', 'nt', 'nz']:
+            if words.__contains__(parent_id + 1) and words[parent_id + 1]['relation'] in ['RAD', 'CMP'] and \
                     words[parent_id + 1]['token'] not in notHV:
-                if words.__contains__(parent_id + 2) and words[parent_id + 2]['relate'] in ['RAD', 'CMP'] and \
+                if words.__contains__(parent_id + 2) and words[parent_id + 2]['relation'] in ['RAD', 'CMP'] and \
                         words[parent_id + 2]['token'] not in notHV:
                     coll_v_2hv_o = parent_cont + '\t' + words[parent_id + 1]['token'] + '\t' + words[parent_id + 2][
                         'token'] + '\t' + value['token'] + '\t' + 'V_2HV_O'
@@ -79,10 +79,10 @@ def getColl(words):
                 collocation.append(coll_v_o)
 
         # SP
-        if value['relate'] == 'SBV' and value['pos'] not in ['r', 'nh', 'nl']:
-            if words.__contains__(parent_id + 1) and words[parent_id + 1]['relate'] in ['RAD', 'CMP'] and \
+        if value['relation'] == 'SBV' and value['pos'] not in ['r', 'nh', 'nl']:
+            if words.__contains__(parent_id + 1) and words[parent_id + 1]['relation'] in ['RAD', 'CMP'] and \
                     words[parent_id + 1]['token'] not in notHV:
-                if words.__contains__(parent_id + 2) and words[parent_id + 2]['relate'] in ['RAD', 'CMP'] and \
+                if words.__contains__(parent_id + 2) and words[parent_id + 2]['relation'] in ['RAD', 'CMP'] and \
                         words[parent_id + 2]['token'] not in notHV:
                     coll_s_v_2hv = value['token'] + '\t' + parent_cont + '\t' + words[parent_id + 1]['token'] + '\t' + \
                                    words[parent_id + 2]['token'] + '\t' + 'S_V_2HV'
@@ -96,7 +96,7 @@ def getColl(words):
                 collocation.append(coll_s_v)
 
         # AP
-        if value['relate'] == 'ADV' and value['pos'] in ['a', 'd', 'v']:
+        if value['relation'] == 'ADV' and value['pos'] in ['a', 'd', 'v']:
             if key == parent_id - 1:
                 if words[parent_id]['pos'] == 'a':
                     coll_d_a = value['token'] + '\t' + parent_cont + '\t' + 'D_A'
@@ -117,14 +117,14 @@ def getColl(words):
 
         # PV
         if value['pos'] == 'p' and value['token'] in prepositions:
-            if value['relate'] == 'ADV' and words[parent_id]['pos'] == 'v' and key < parent_id:
+            if value['relation'] == 'ADV' and words[parent_id]['pos'] == 'v' and key < parent_id:
                 if words.__contains__(parent_id + 1) and words.__contains__(parent_id + 2) and words[parent_id + 1][
-                    'relate'] in ['RAD', 'CMP'] and words[parent_id + 1]['token'] not in notHV and words[parent_id + 2][
-                    'relate'] in ['RAD', 'CMP'] and words[parent_id + 2]['token'] not in notHV:
+                    'relation'] in ['RAD', 'CMP'] and words[parent_id + 1]['token'] not in notHV and words[parent_id + 2][
+                    'relation'] in ['RAD', 'CMP'] and words[parent_id + 2]['token'] not in notHV:
                     coll_p_v_2hv = value['token'] + '\t' + 'X' + '\t' + parent_cont + '\t' + words[parent_id + 1][
                         'token'] + '\t' + words[parent_id + 2]['token'] + '\t' + 'P_X_V_2HV'
                     collocation.append(coll_p_v_2hv)
-                elif words.__contains__(parent_id + 1) and words[parent_id + 1]['relate'] in ['RAD', 'CMP'] and \
+                elif words.__contains__(parent_id + 1) and words[parent_id + 1]['relation'] in ['RAD', 'CMP'] and \
                         words[parent_id + 1]['token'] not in notHV:
                     coll_p_v_hv = value['token'] + '\t' + 'X' + '\t' + parent_cont + '\t' + words[parent_id + 1][
                         'token'] + '\t' + 'P_X_V_HV'
@@ -133,7 +133,7 @@ def getColl(words):
                     coll_p_v = value['token'] + '\t' + 'X' + '\t' + parent_cont + '\t' + 'P_X_V'
                     collocation.append(coll_p_v)
         # PC
-        if value['relate'] == 'CMP':
+        if value['relation'] == 'CMP':
             if key == parent_id + 1:
                 if words.__contains__(key + 1):
                     if words[key + 1]['token'] in ['了', '得', '过']:
@@ -146,10 +146,10 @@ def getColl(words):
                 if words[key - 1]['token'] in ['了', '得', '过']:
                     coll_v_u_c = parent_cont + '\t' + words[key - 1]['token'] + '\t' + value['token'] + '\t' + 'V_U_C'
                     collocation.append(coll_v_u_c)
-                elif words[key - 1]['relate'] == 'ADV':
+                elif words[key - 1]['relation'] == 'ADV':
                     coll_v_d_c = parent_cont + '\t' + words[key - 1]['token'] + '\t' + value['token'] + '\t' + 'V_D_C'
                     collocation.append(coll_v_d_c)
-                elif words[key - 1]['relate'] == 'ATT':
+                elif words[key - 1]['relation'] == 'ATT':
                     if words[key - 1]['pos'] == 'm':
                         coll_v_m_c = parent_cont + '\t' + 'm' + '\t' + value['token'] + '\t' + 'V_M_C'
                         collocation.append(coll_v_m_c)
@@ -159,7 +159,7 @@ def getColl(words):
             elif key > parent_id + 2:
                 if words[parent_id + 1]['token'] in ['了', '得', '过']:
                     if key == parent_id + 3:
-                        if words[key - 1]['relate'] == 'ATT':
+                        if words[key - 1]['relation'] == 'ATT':
                             if words[key - 1]['pos'] == 'm':
                                 coll_v_u_m_c = parent_cont + '\t' + words[key - 2]['token'] + '\t' + 'm' + '\t' + value[
                                     'token'] + '\t' + 'V_U_M_C'
@@ -168,7 +168,7 @@ def getColl(words):
                                 coll_v_u_a_c = parent_cont + '\t' + words[key - 2]['token'] + '\t' + words[key - 1][
                                     'token'] + '\t' + value['token'] + '\t' + 'V_U_A_C'
                                 collocation.append(coll_v_u_a_c)
-                        elif words[key - 1]['relate'] == 'ADV':
+                        elif words[key - 1]['relation'] == 'ADV':
                             if value['pos'] != 'v':
                                 coll_v_u_d_c = parent_cont + '\t' + words[key - 2]['token'] + '\t' + words[key - 1][
                                     'token'] + '\t' + value['token'] + '\t' + 'V_U_D_C'
