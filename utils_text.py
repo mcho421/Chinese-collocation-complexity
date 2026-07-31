@@ -2,7 +2,7 @@ import os
 from ltp import LTP, StnSplit
 
 
-def parse_sentence(sentence, ltp):
+def build_dependency_tree(sentence, ltp):
     d = {}
     res = ltp.pipeline([sentence], tasks=["cws", "pos", "dep"])
 
@@ -35,7 +35,7 @@ def text_process(text, ltp):
                 continue
 
             sentence_id += 1
-            worddict = parse_sentence(sentence, ltp)
+            worddict = build_dependency_tree(sentence, ltp)
             text_dict[sentence_id] = {'worddict': worddict, 'sentence': sentence}
 
     return text_dict
