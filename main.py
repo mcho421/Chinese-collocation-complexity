@@ -30,11 +30,11 @@ ltp = LTP(args.model_path)
 index_data = {}
 
 for file_path in args.input_paths:
-    filename = file_path.stem
+    filename = file_path.name
     text = file_path.read_text(encoding='utf-8')
 
     if len(text) < 20:
-        print(filename, 'too short and pass...')
+        print(f"'{filename}' is too short, skipping...")
         continue
 
     text_dict = text_process(text, ltp)
