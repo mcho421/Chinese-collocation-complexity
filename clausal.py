@@ -40,7 +40,7 @@ def clausal_index(sent_cont, word_dict):
     tmp_info = []
 
     for k, v in word_dict.items():
-        word, pos = v['cont'], v['pos']
+        word, pos = v['token'], v['pos']
 
         if pos in ['wp', 'ws']:
             if word in ['，', ',', '；', ';', '。', '？', '?', '！', '!']:

@@ -16,7 +16,7 @@ def parse_sentence(sentence, ltp):
         pos = pos_tags[i]
         parent = heads[i] - 1
         relate = labels[i]
-        d[i] = {'cont': token, 'pos': pos, 'parent': parent, 'relate': relate}
+        d[i] = {'token': token, 'pos': pos, 'parent': parent, 'relate': relate}
 
     return d
 
