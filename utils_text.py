@@ -3,7 +3,7 @@ from ltp import LTP, StnSplit
 
 
 def build_dependency_tree(sentence, ltp):
-    d = {}
+    dependency_tree = {}
     res = ltp.pipeline([sentence], tasks=["cws", "pos", "dep"])
 
     tokens = res.cws[0]
@@ -16,9 +16,9 @@ def build_dependency_tree(sentence, ltp):
         pos = pos_tags[i]
         parent = heads[i] - 1
         relate = labels[i]
-        d[i] = {'token': token, 'pos': pos, 'parent': parent, 'relate': relate}
+        dependency_tree[i] = {'token': token, 'pos': pos, 'parent': parent, 'relate': relate}
 
-    return d
+    return dependency_tree
 
 
 def text_process(text, ltp):
