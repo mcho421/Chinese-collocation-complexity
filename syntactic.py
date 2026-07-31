@@ -20,7 +20,7 @@ def getSyntacticIndices(text_dict):
 
     for sentence_id, info in text_dict.items():
 
-        sent, worddict = info['sent'], info['worddict']
+        sent, worddict = info['sentence'], info['worddict']
 
         # clausal features
         if not re.search('[，。？！；……]', sent):

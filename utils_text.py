@@ -36,6 +36,6 @@ def text_process(text, ltp):
 
             sentence_id += 1
             worddict = parse(sentence, ltp)
-            text_dict[sentence_id] = {'worddict': worddict, 'sent': sentence}
+            text_dict[sentence_id] = {'worddict': worddict, 'sentence': sentence}
 
     return text_dict
