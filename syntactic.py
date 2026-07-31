@@ -18,7 +18,7 @@ def getSyntacticIndices(text_dict):
     sent_length_list, clause_length_list, T_unit_length_list = [], [], []
     collocation_list = []
 
-    for sent_id, info in text_dict.items():
+    for sentence_id, info in text_dict.items():
 
         sent, worddict = info['sent'], info['worddict']
 

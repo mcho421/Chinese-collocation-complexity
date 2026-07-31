@@ -22,7 +22,7 @@ def parse(sent, ltp):
 
 
 def text_process(text, ltp):
-    sent_id, text_dict = 0, {}
+    sentence_id, text_dict = 0, {}
     paras = text.split('\n')
 
     for para in paras:
@@ -34,8 +34,8 @@ def text_process(text, ltp):
             if len(sent) < 3:
                 continue
 
-            sent_id += 1
+            sentence_id += 1
             worddict = parse(sent, ltp)
-            text_dict[sent_id] = {'worddict': worddict, 'sent': sent}
+            text_dict[sentence_id] = {'worddict': worddict, 'sent': sent}
 
     return text_dict
