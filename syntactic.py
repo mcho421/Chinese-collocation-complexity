@@ -15,18 +15,18 @@ def getSyntacticIndices(text_dict):
     indices = {}
 
     # get linguistic features
-    sent_length_list, clause_length_list, T_unit_length_list = [], [], []
+    sentence_length_list, clause_length_list, T_unit_length_list = [], [], []
     collocation_list = []
 
     for sentence_id, info in text_dict.items():
 
-        sent, worddict = info['sentence'], info['worddict']
+        sentence, worddict = info['sentence'], info['worddict']
 
         # clausal features
-        if not re.search('[，。？！；……]', sent):
+        if not re.search('[，。？！；……]', sentence):
             continue
-        sent_length, clause_lengths, T_unit_lengths = clausal_index(sent, worddict)
-        sent_length_list.append(sent_length)
+        sentence_length, clause_lengths, T_unit_lengths = clausal_index(sentence, worddict)
+        sentence_length_list.append(sentence_length)
         clause_length_list.extend(clause_lengths)
         T_unit_length_list.extend(T_unit_lengths)
 
@@ -35,13 +35,13 @@ def getSyntacticIndices(text_dict):
         collocation_list.extend(collocations)
 
     # udpate clausal indices
-    if len(sent_length_list) > 2:
-        meanSL, meanCL, meanTL = np.mean(sent_length_list), np.mean(clause_length_list), np.mean(T_unit_length_list)
+    if len(sentence_length_list) > 2:
+        meanSL, meanCL, meanTL = np.mean(sentence_length_list), np.mean(clause_length_list), np.mean(T_unit_length_list)
         indices['MLS'] = meanSL
         indices['MLC'] = meanCL
         indices['MLTU'] = meanTL
-        indices['NCPS'] = len(clause_length_list) / len(sent_length_list)
-        indices['NTPS'] = len(T_unit_length_list) / len(sent_length_list)
+        indices['NCPS'] = len(clause_length_list) / len(sentence_length_list)
+        indices['NTPS'] = len(T_unit_length_list) / len(sentence_length_list)
 
     # update collocation based indices
     if len(collocation_list) > 10:

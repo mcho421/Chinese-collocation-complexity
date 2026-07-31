@@ -2,9 +2,9 @@ import os
 from ltp import LTP, StnSplit
 
 
-def parse(sent, ltp):
+def parse(sentence, ltp):
     d = {}
-    res = ltp.pipeline([sent], tasks=["cws", "pos", "dep"])
+    res = ltp.pipeline([sentence], tasks=["cws", "pos", "dep"])
 
     wordlist = res.cws[0]
     postags = res.pos[0]
