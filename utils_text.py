@@ -6,17 +6,17 @@ def parse_sentence(sentence, ltp):
     d = {}
     res = ltp.pipeline([sentence], tasks=["cws", "pos", "dep"])
 
-    wordlist = res.cws[0]
+    words = res.cws[0]
     pos_tags = res.pos[0]
     heads = res.dep[0]['head']
     labels = res.dep[0]['label']
 
-    for i in range(len(wordlist)):
-        token = wordlist[i]
+    for i in range(len(words)):
+        word = words[i]
         pos = pos_tags[i]
         parent = heads[i] - 1
         relate = labels[i]
-        d[i] = {'cont': token, 'pos': pos, 'parent': parent, 'relate': relate}
+        d[i] = {'cont': word, 'pos': pos, 'parent': parent, 'relate': relate}
 
     return d
 
