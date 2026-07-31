@@ -23,13 +23,13 @@ def parse(sent, ltp):
 
 def text_process(text, ltp):
     sentence_id, text_dict = 0, {}
-    paras = text.split('\n')
+    paragraphs = text.split('\n')
 
-    for para in paras:
-        para = para.strip()
-        if len(para) < 3:
+    for paragraph in paragraphs:
+        paragraph = paragraph.strip()
+        if len(paragraph) < 3:
             continue
-        sents = StnSplit().split(para)
+        sents = StnSplit().split(paragraph)
         for sent in sents:
             if len(sent) < 3:
                 continue
