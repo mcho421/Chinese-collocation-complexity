@@ -25,7 +25,7 @@ def getSyntacticIndices(sentence_dependency_trees):
         # clausal features
         if not re.search('[，。？！；……]', sentence):
             continue
-        sentence_length, clause_lengths, T_unit_lengths = clausal_index(sentence, dependency_tree)
+        sentence_length, clause_lengths, T_unit_lengths = clausal_index(dependency_tree)
         sentence_length_list.append(sentence_length)
         clause_length_list.extend(clause_lengths)
         T_unit_length_list.extend(T_unit_lengths)

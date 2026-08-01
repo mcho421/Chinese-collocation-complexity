@@ -27,9 +27,8 @@ def merge_T_units(candidates):
     return results
 
 
-def clausal_index(sent_cont, word_dict):
+def clausal_index(word_dict):
     '''
-    sent_cont: type <str>
     word_dict: type <dict>
     return : length of a sentence, [length of clauses], [length of T-Units]
     '''
