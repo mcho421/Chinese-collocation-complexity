@@ -18,7 +18,7 @@ def getSyntacticIndices(text_dict):
     sentence_length_list, clause_length_list, T_unit_length_list = [], [], []
     collocation_list = []
 
-    for sentence_id, info in text_dict.items():
+    for _, info in text_dict.items():
 
         sentence, dependency_tree = info['sentence'], info['dependency_tree']
 
