@@ -20,18 +20,18 @@ def getSyntacticIndices(text_dict):
 
     for sentence_id, info in text_dict.items():
 
-        sentence, worddict = info['sentence'], info['worddict']
+        sentence, dependency_tree = info['sentence'], info['dependency_tree']
 
         # clausal features
         if not re.search('[，。？！；……]', sentence):
             continue
-        sentence_length, clause_lengths, T_unit_lengths = clausal_index(sentence, worddict)
+        sentence_length, clause_lengths, T_unit_lengths = clausal_index(sentence, dependency_tree)
         sentence_length_list.append(sentence_length)
         clause_length_list.extend(clause_lengths)
         T_unit_length_list.extend(T_unit_lengths)
 
         # collocations
-        collocations = getColl(worddict)
+        collocations = getColl(dependency_tree)
         collocation_list.extend(collocations)
 
     # udpate clausal indices

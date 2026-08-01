@@ -35,7 +35,7 @@ def text_process(text, ltp):
                 continue
 
             sentence_id += 1
-            worddict = build_dependency_tree(sentence, ltp)
-            text_dict[sentence_id] = {'worddict': worddict, 'sentence': sentence}
+            dependency_tree = build_dependency_tree(sentence, ltp)
+            text_dict[sentence_id] = {'dependency_tree': dependency_tree, 'sentence': sentence}
 
     return text_dict
