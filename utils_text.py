@@ -11,12 +11,8 @@ def build_dependency_tree(sentence, ltp):
     heads = res.dep[0]['head']
     relations = res.dep[0]['label']
 
-    for i in range(len(tokens)):
-        token = tokens[i]
-        pos = pos_tags[i]
-        parent = heads[i] - 1
-        relation = relations[i]
-        dependency_tree[i] = {'token': token, 'pos': pos, 'parent': parent, 'relation': relation}
+    for i, (token, pos, head, relation) in enumerate(zip(tokens, pos_tags, heads, relations)):
+        dependency_tree[i] = {'token': token, 'pos': pos, 'parent': head - 1, 'relation': relation}
 
     return dependency_tree
 
