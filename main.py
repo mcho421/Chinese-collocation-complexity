@@ -37,8 +37,8 @@ for file_path in args.input_paths:
         print(f"'{filename}' is too short, skipping...")
         continue
 
-    text_dict = text_process(text, ltp)
-    indices = getSyntacticIndices(text_dict)
+    sentence_dependency_trees = text_process(text, ltp)
+    indices = getSyntacticIndices(sentence_dependency_trees)
     index_data[filename] = indices
 
 df = pd.DataFrame.from_dict(index_data, orient='index')

@@ -5,10 +5,10 @@ from utils_coll import *
 from clausal import *
 
 
-def getSyntacticIndices(text_dict):
+def getSyntacticIndices(sentence_dependency_trees):
     '''
     25 syntactic complexity measures
-    param: text_dict, type <dict>
+    param: sentence_dependency_trees, type <list[dict]>
     return: indices, type <dict>
     '''
 
@@ -18,7 +18,7 @@ def getSyntacticIndices(text_dict):
     sentence_length_list, clause_length_list, T_unit_length_list = [], [], []
     collocation_list = []
 
-    for _, info in text_dict.items():
+    for info in sentence_dependency_trees:
 
         sentence, dependency_tree = info['sentence'], info['dependency_tree']
 

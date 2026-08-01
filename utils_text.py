@@ -22,7 +22,7 @@ def build_dependency_tree(sentence, ltp):
 
 
 def text_process(text, ltp):
-    sentence_id, text_dict = 0, {}
+    sentence_id, sentence_dependency_trees = 0, []
     paragraphs = text.split('\n')
 
     for paragraph in paragraphs:
@@ -36,6 +36,6 @@ def text_process(text, ltp):
 
             sentence_id += 1
             dependency_tree = build_dependency_tree(sentence, ltp)
-            text_dict[sentence_id] = {'dependency_tree': dependency_tree, 'sentence': sentence}
+            sentence_dependency_trees.append({'dependency_tree': dependency_tree, 'sentence': sentence})
 
-    return text_dict
+    return sentence_dependency_trees
