@@ -23,9 +23,8 @@ def build_dependency_tree(sentence, ltp):
 
 def split_and_build_dependency_trees(text, ltp):
     sentence_dependency_trees = []
-    paragraphs = text.split('\n')
 
-    for paragraph in paragraphs:
+    for paragraph in text.split('\n'):
         paragraph = paragraph.strip()
         if len(paragraph) < 3:
             continue
