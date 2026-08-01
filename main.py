@@ -37,7 +37,7 @@ for file_path in args.input_paths:
         print(f"'{filename}' is too short, skipping...")
         continue
 
-    sentence_dependency_trees = text_process(text, ltp)
+    sentence_dependency_trees = split_and_build_dependency_trees(text, ltp)
     indices = getSyntacticIndices(sentence_dependency_trees)
     index_data[filename] = indices
 

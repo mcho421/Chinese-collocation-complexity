@@ -21,7 +21,7 @@ def build_dependency_tree(sentence, ltp):
     return dependency_tree
 
 
-def text_process(text, ltp):
+def split_and_build_dependency_trees(text, ltp):
     sentence_dependency_trees = []
     paragraphs = text.split('\n')
 
