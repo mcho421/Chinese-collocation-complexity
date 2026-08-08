@@ -2,7 +2,7 @@
     collcation extraction
 '''
 
-notHV = ['的', '吗', '吧', '呢', '啊', '呀', '之', '等']
+ignored = ['的', '吗', '吧', '呢', '啊', '呀', '之', '等']
 prepositions = ['把', '被', '对', '给', '跟', '将', '为', '向', '由', '与', '和', '同']
 
 
@@ -43,7 +43,7 @@ def getColl(dependency_tree):
         # 2. PREPOSITION + AUXILIARY PATTERNS (P_X_U)
         # Structure: Preposition + [Words...] + Auxiliary Particle ('u')
         # =========================================================================
-        if token_obj['relation'] == 'RAD' and token_obj['pos'] == 'u' and token_obj['token'] not in notHV:
+        if token_obj['relation'] == 'RAD' and token_obj['pos'] == 'u' and token_obj['token'] not in ignored:
             if token_idx > parent_idx + 1 and dependency_tree[parent_idx]['pos'] == 'p':
                 coll_p_u = parent_token + '\t' + 'X' + '\t' + token_obj['token'] + '\t' + 'P_X_U'
                 collocation.append(coll_p_u)
@@ -91,10 +91,10 @@ def getColl(dependency_tree):
         if token_obj['relation'] in ['VOB', 'FOB', 'IOB'] and token_obj['pos'] in ['n', 'ni', 'ns', 'nt', 'nz']:
             # Check if verb has trailing aspect particles (e.g., Verb + 了/过 + Object)
             if dependency_tree.__contains__(parent_idx + 1) and dependency_tree[parent_idx + 1]['relation'] in ['RAD', 'CMP'] and \
-                    dependency_tree[parent_idx + 1]['token'] not in notHV:
+                    dependency_tree[parent_idx + 1]['token'] not in ignored:
                 # 5A: Verb + 2 Aspect Particles + Object (e.g., 看+了+过+书)
                 if dependency_tree.__contains__(parent_idx + 2) and dependency_tree[parent_idx + 2]['relation'] in ['RAD', 'CMP'] and \
-                        dependency_tree[parent_idx + 2]['token'] not in notHV:
+                        dependency_tree[parent_idx + 2]['token'] not in ignored:
                     coll_v_2hv_o = parent_token + '\t' + dependency_tree[parent_idx + 1]['token'] + '\t' + dependency_tree[parent_idx + 2][
                         'token'] + '\t' + token_obj['token'] + '\t' + 'V_2HV_O'
                     collocation.append(coll_v_2hv_o)
@@ -115,10 +115,10 @@ def getColl(dependency_tree):
         if token_obj['relation'] == 'SBV' and token_obj['pos'] not in ['r', 'nh', 'nl']:
             # Check if the verb has attached helper particles
             if dependency_tree.__contains__(parent_idx + 1) and dependency_tree[parent_idx + 1]['relation'] in ['RAD', 'CMP'] and \
-                    dependency_tree[parent_idx + 1]['token'] not in notHV:
+                    dependency_tree[parent_idx + 1]['token'] not in ignored:
                 # 6A: Subject + Verb + 2 Particles
                 if dependency_tree.__contains__(parent_idx + 2) and dependency_tree[parent_idx + 2]['relation'] in ['RAD', 'CMP'] and \
-                        dependency_tree[parent_idx + 2]['token'] not in notHV:
+                        dependency_tree[parent_idx + 2]['token'] not in ignored:
                     coll_s_v_2hv = token_obj['token'] + '\t' + parent_token + '\t' + dependency_tree[parent_idx + 1]['token'] + '\t' + \
                                    dependency_tree[parent_idx + 2]['token'] + '\t' + 'S_V_2HV'
                     collocation.append(coll_s_v_2hv)
@@ -166,14 +166,14 @@ def getColl(dependency_tree):
             if token_obj['relation'] == 'ADV' and dependency_tree[parent_idx]['pos'] == 'v' and token_idx < parent_idx:
                 # 8A: Preposition + [X] + Verb + 2 Aspect Particles
                 if dependency_tree.__contains__(parent_idx + 1) and dependency_tree.__contains__(parent_idx + 2) and dependency_tree[parent_idx + 1][
-                    'relation'] in ['RAD', 'CMP'] and dependency_tree[parent_idx + 1]['token'] not in notHV and dependency_tree[parent_idx + 2][
-                    'relation'] in ['RAD', 'CMP'] and dependency_tree[parent_idx + 2]['token'] not in notHV:
+                    'relation'] in ['RAD', 'CMP'] and dependency_tree[parent_idx + 1]['token'] not in ignored and dependency_tree[parent_idx + 2][
+                    'relation'] in ['RAD', 'CMP'] and dependency_tree[parent_idx + 2]['token'] not in ignored:
                     coll_p_v_2hv = token_obj['token'] + '\t' + 'X' + '\t' + parent_token + '\t' + dependency_tree[parent_idx + 1][
                         'token'] + '\t' + dependency_tree[parent_idx + 2]['token'] + '\t' + 'P_X_V_2HV'
                     collocation.append(coll_p_v_2hv)
                 # 8B: Preposition + [X] + Verb + 1 Aspect Particle
                 elif dependency_tree.__contains__(parent_idx + 1) and dependency_tree[parent_idx + 1]['relation'] in ['RAD', 'CMP'] and \
-                        dependency_tree[parent_idx + 1]['token'] not in notHV:
+                        dependency_tree[parent_idx + 1]['token'] not in ignored:
                     coll_p_v_hv = token_obj['token'] + '\t' + 'X' + '\t' + parent_token + '\t' + dependency_tree[parent_idx + 1][
                         'token'] + '\t' + 'P_X_V_HV'
                     collocation.append(coll_p_v_hv)
